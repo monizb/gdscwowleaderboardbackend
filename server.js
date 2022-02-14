@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const { generateLeaderboard } = require('./functions/generateLeaderboard');
 const { updateLeaderboardJob } = require('./jobs/updateOSLeaderboard');
+const { generateQuizLeaderboard } = require('./functions/generateQuizLeaderboard');
 const leaderboard = require('./leaderboard.json');
 const fs = require('fs');
 
@@ -21,6 +22,10 @@ app.get("/OSLeaderboard", (req, res) => {
         let obj = JSON.parse(data);
         res.send(obj);
     });
+});
+
+app.get("/quizLeaderboard/:workbookId/:sheetId", async function (req, res) {
+    generateQuizLeaderboard(req.params.workbookId, req.params.sheetId, res);
 });
 
 app.listen(process.env.PORT || 3000, () => {
