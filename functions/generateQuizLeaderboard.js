@@ -1,7 +1,8 @@
 var axios = require('axios');
+require('dotenv').config()
 
 async function generateQuizLeaderboard(workbookId, sheetId, res) {
-    axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${workbookId}/values/${sheetId}!A2:B?key=AIzaSyAjOBiY5I7-XdKO3DYkV9kBrBOn8yJW0h0`)
+    axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${workbookId}/values/${sheetId}!A2:B?key=${process.env.SHEETS_KEY}`)
         .then(async function (response) {
             let leaderboard = [];
             let data = response.data.values;

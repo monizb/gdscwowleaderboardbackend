@@ -1,6 +1,7 @@
 var projects = require("../projects.json");
 var fs = require("fs");
 var axios = require('axios');
+require('dotenv').config()
 
 const timer = ms => new Promise(res => setTimeout(res, ms))
 let leaderboard = {};
@@ -22,7 +23,7 @@ async function generateLeaderboard() {
     for (let m = 0; m < projects.length; m++) {
         await axios.get(`https://api.github.com/search/issues?q=repo:${projects[m].Repository}+is:pr+label:${identifyingLabel}+is:merged&per_page=100`, {
             headers: {
-                Authorization: 'token ' + "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"
+                Authorization: 'token ' + process.env.GIT_KEY
             }
         }).then(async function (response) {
             if (response.data.items && response.data.items.length > 0) {
@@ -61,7 +62,7 @@ async function generateLeaderboard() {
                         console.log("Page: " + i);
                         let paginated = await axios.get(`https://api.github.com/search/issues?q=repo:${projects[m].Repository}+is:pr+label:${identifyingLabel}+is:merged&per_page=100&page=${i}`, {
                             headers: {
-                                Authorization: 'token ' + "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"
+                                Authorization: 'token ' + process.env.GIT_KEY
                             }
                         }).then(async function (response) {
                             console.log("*****" + response.data.items.length);

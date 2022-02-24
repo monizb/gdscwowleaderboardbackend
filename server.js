@@ -6,6 +6,7 @@ const { updateLeaderboardJob } = require('./jobs/updateOSLeaderboard');
 const { generateQuizLeaderboard } = require('./functions/generateQuizLeaderboard');
 const leaderboard = require('./leaderboard.json');
 const fs = require('fs');
+require('dotenv').config()
 
 app.use(express.json());
 
